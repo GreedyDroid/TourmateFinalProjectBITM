@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_events"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/events" />
+
+    <item
+        android:id="@+id/navigation_nearby"
+        android:icon="@drawable/ic_location_on_black_24dp"
+        android:title="@string/nearby"/>
+    <item
+        android:id="@+id/navigation_weather"
+        android:icon="@drawable/ic_cloudy"
+        android:title="@string/weather" />
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/settings_icon"
+        android:title="@string/settings"/>
+
+</menu>

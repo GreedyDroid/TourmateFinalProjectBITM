@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.sayed.tourmate.HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/home_background"/>
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <RelativeLayout
+                    android:id="@+id/layoutForProfile"
+                    android:layout_width="250dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#000"
+                        android:alpha=".35" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Profile"
+                        android:textSize="35dp"
+                        android:gravity="center"
+                        android:onClick="goToProfile"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layoutForSignUp"
+                    android:layout_width="250dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="visible">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#000"
+                        android:alpha=".35" />
+                    <TextView
+                        android:id="@+id/logInTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="LogIn"
+                        android:textSize="30sp"
+                        android:textIsSelectable="true"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="45sp"
+                        android:autoSizeMinTextSize="10sp"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:onClick="gotoLogInActivity"
+                        android:layout_above="@+id/textView" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="don't have an account?"
+                        android:textColor="@color/white"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:padding="5dp"
+                        android:gravity="center"
+                        android:onClick="goToSignUpActivity"
+                        android:id="@+id/textView" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="250dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="5dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#000"
+                        android:alpha=".35" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Events"
+                        android:textSize="35dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="250dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#000"
+                        android:alpha=".35" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Friends"
+                        android:textSize="35dp"
+                        android:gravity="center"
+                        android:onClick="logOUt"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#303F9F"
+                app:itemIconTint="@color/bottom_item_foreground"
+                app:itemTextColor="@color/bottom_item_foreground"
+                app:menu="@menu/navigation" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
