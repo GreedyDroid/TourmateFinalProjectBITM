@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sayed.tourmate.databinding.ActivityHomeBinding;
+import com.example.sayed.tourmate.events.Events;
 import com.example.sayed.tourmate.login_signup.LoginActivity;
 import com.example.sayed.tourmate.login_signup.SignupActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -99,6 +100,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void goToProfile(View view) {
         startActivity(new Intent(this, Profile.class));
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     @Override
@@ -116,5 +118,10 @@ public class HomeActivity extends AppCompatActivity {
     public void logOUt(View view) {
         firebaseAuth.signOut();
         Toast.makeText(this, "signOUt", Toast.LENGTH_SHORT).show();
+    }
+
+    public void goToEvents(View view) {
+        startActivity(new Intent(this, Events.class));
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 }

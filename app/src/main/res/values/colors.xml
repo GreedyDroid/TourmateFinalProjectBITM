@@ -20,4 +20,5 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+    <color name="floting_bt_clolor">#673AB7</color>
 </resources>
