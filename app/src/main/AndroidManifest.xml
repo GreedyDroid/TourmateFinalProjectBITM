@@ -29,8 +29,13 @@
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".Profile"
-            android:theme="@style/AppTheme.Dark"/>
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".events.Events"
+            android:label="@string/title_activity_events"
+            android:theme="@style/AppTheme.Dark">
 
+        </activity>
     </application>
 
 </manifest>

@@ -41,8 +41,10 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:10.0.1'
     // for downloading image
     compile 'com.squareup.picasso:picasso:2.5.2'
-
     testCompile 'junit:junit:4.12'
+    // for card and recycler
+    compile 'com.android.support:cardview-v7:26.+'
+    compile 'com.android.support:recyclerview-v7:26.+'
 }
 
 
