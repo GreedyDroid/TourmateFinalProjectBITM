@@ -50,4 +50,11 @@
         <item name="android:textAppearance">@color/white</item>
     </style>
 
+    <!--For Flogint layout-->
+    <style name="AppTheme.Dark.DialogBlue_gray" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/iron</item>
+        <item name="android:background">@color/blue_gray</item>
+    </style>
+
 </resources>
