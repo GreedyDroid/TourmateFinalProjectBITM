@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.sayed.tourmate.Profile;
 import com.example.sayed.tourmate.R;
 import com.example.sayed.tourmate.databinding.ActivitySignupBinding;
+import com.example.sayed.tourmate.events.UserEvent;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -118,7 +119,7 @@ public class SignupActivity extends AppCompatActivity {
         return user.getUid();
     }
 
-    private void updateDatabase(String name, String email, String mobile){
+    /*private void updateDatabase(String name, String email, String mobile){
         //ForUpdating Database
         if (getUserID()!= null){
 
@@ -136,7 +137,7 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
         }
-    }
+    }*/
 
     // this code is written inside asynTask
  /*   private void registerWithEmailAndPass(final String email, String password, final String name, final String mobile){
