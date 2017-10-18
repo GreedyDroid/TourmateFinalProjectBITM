@@ -1,10 +1,12 @@
 package com.example.sayed.tourmate;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -121,7 +123,21 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void goToEvents(View view) {
-        startActivity(new Intent(this, Events.class));
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null){
+            startActivity(new Intent(this, Events.class));
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        }else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Please Log in To View Your Events")
+                    .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 }
