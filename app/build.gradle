@@ -1,5 +1,13 @@
-apply plugin: 'com.android.application'
+repositories {
+    jcenter()
+    maven {
+        url "https://maven.google.com"
+    }
+    //for auto complete
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
 
+apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -29,26 +37,23 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    //compile 'com.google.firebase:firebase-storage:9.4.0'
+    // for downloading image
+    // for card and recycler
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-vector-drawable:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.google.firebase:firebase-database:10.0.1'
-
-    //compile 'com.google.firebase:firebase-storage:9.4.0'
     compile 'com.firebaseui:firebase-ui:0.4.4'
     compile 'com.google.android.gms:play-services-auth:10.0.1'
-    // for downloading image
     compile 'com.squareup.picasso:picasso:2.5.2'
-    testCompile 'junit:junit:4.12'
-    // for card and recycler
     compile 'com.android.support:cardview-v7:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
+    testCompile 'junit:junit:4.12'
+
+    //For Place Auto Complete
+    compile 'com.seatgeek:placesautocomplete:0.3-SNAPSHOT'
 }
-
-
-
-
-
 apply plugin: 'com.google.gms.google-services'

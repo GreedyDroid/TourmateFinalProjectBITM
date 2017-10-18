@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.sayed.tourmate.login_signup.LoginActivity">
+    tools:context="com.example.sayed.tourmate.events.AddEvent">
 
     <!--Coordinate Layout For sncack Bar-->
     <android.support.design.widget.CoordinatorLayout
@@ -31,70 +30,85 @@
                     android:layout_marginBottom="24dp"
                     android:layout_gravity="center_horizontal" />
 
-                <!--  Email Label -->
+                <!--  google location suggestion -->
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-                    <EditText android:id="@+id/input_email"
+                    <com.seatgeek.placesautocomplete.PlacesAutocompleteTextView
+                        android:id="@+id/placeAutoComplete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
-                        android:hint="Email" />
+                        android:layout_gravity="center_horizontal"
+                        android:padding="16dp"
+                        android:hint="Location"
+                        app:pacv_languageCode="en"
+                        app:pacv_resultType="no_type"
+                        app:pacv_adapterClass="com.example.sayed.tourmate.events.TourMatePlacesAutocompleteAdapter"
+                        app:pacv_googleMapsApiKey="@string/google_maps_api_key" />
                 </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:id="@+id/locationLV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/locationTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"/>
+                </LinearLayout>
 
-                <!--  Password Label -->
+                <!-- Event Budget -->
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-                    <EditText android:id="@+id/input_password"
+                    <EditText android:id="@+id/input_reEnterPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:hint="Password"/>
+                        android:inputType="numberDecimal"
+                        android:hint="Tour Budget"/>
                 </android.support.design.widget.TextInputLayout>
 
+                <!-- Signup Button -->
                 <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_login"
+                    android:id="@+id/btn_signup"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
                     android:padding="12dp"
-                    android:text="Login"/>
-
-                <!-- FaceBook Login Button -->
+                    android:text="Create Account"/>
+                <!-- FaceBook SignUP Button -->
                 <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_login_using_fb"
+                    android:id="@+id/btn_signup_using_fb"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:onClick="singInWithFacebook"
+                    android:onClick="signUpWithSocialMedia"
                     android:padding="12dp"
-                    android:text="LogIn Using Facebook"
+                    android:text="SignUp Using Facebook"
                     android:textAllCaps="false" />
+                <!--Google SignUP Button-->
                 <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_login_using_google"
+                    android:id="@+id/btn_signup_using_google"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:onClick="signInWithGoogle"
+                    android:onClick="signUpWithSocialMedia"
                     android:padding="12dp"
-                    android:text="LogIn Using Google Account"
+                    android:text="SignUp Using Google Account"
                     android:textAllCaps="false" />
-                <TextView android:id="@+id/link_signup"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    android:text="No account yet? Create one"
-                    android:gravity="center"
-                    android:textSize="16dip"/>
 
             </LinearLayout>
         </ScrollView>
     </android.support.design.widget.CoordinatorLayout>
-
 </layout>
