@@ -181,6 +181,7 @@ public class AddEvent extends AppCompatActivity {
                     .setAction("Action", null).show();
         }
     }
+    
 
     //Validate Information>>>>>>>>
     private boolean validate(){
