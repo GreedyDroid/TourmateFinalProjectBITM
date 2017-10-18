@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.sayed.tourmate.events.Events">
 
     <android.support.design.widget.AppBarLayout
@@ -21,7 +22,26 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_events" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/asdsdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView TextView"
+            android:textSize="22sp"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/testTVCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="alsreda"
+            android:textSize="22sp"
+            android:gravity="center"/>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addEvent"
@@ -34,4 +54,4 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

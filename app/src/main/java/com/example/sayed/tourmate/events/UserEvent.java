@@ -7,13 +7,15 @@ import java.util.ArrayList;
  */
 
 public class UserEvent {
+    private String eventKey;
     private String location;
     private String budget;
     private String startDate;
     private String returnDate;
     private ArrayList<SpentMoneyFor> allExpenses;
 
-    public UserEvent(String location, String budget, String startDate, String returnDate, ArrayList<SpentMoneyFor> allExpenses) {
+    public UserEvent(String eventKey, String location, String budget, String startDate, String returnDate, ArrayList<SpentMoneyFor> allExpenses) {
+        this.eventKey = eventKey;
         this.location = location;
         this.budget = budget;
         this.startDate = startDate;
@@ -22,6 +24,14 @@ public class UserEvent {
     }
 
     public UserEvent() {
+    }
+
+    public String getEventKey() {
+        return eventKey;
+    }
+
+    public void setEventKey(String eventKey) {
+        this.eventKey = eventKey;
     }
 
     public String getLocation() {
