@@ -78,34 +78,35 @@
                         android:hint="Tour Budget"/>
                 </android.support.design.widget.TextInputLayout>
 
-                <!-- Signup Button -->
+                <!-- Tour Start Button -->
                 <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_signup"
+                    android:id="@+id/startDateBT"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="10dp"
                     android:padding="12dp"
-                    android:text="Create Account"/>
+                    android:onClick="setStartDate"
+                    android:text="Start Date"/>
                 <!-- FaceBook SignUP Button -->
                 <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_signup_using_fb"
+                    android:id="@+id/endDateBT"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:onClick="signUpWithSocialMedia"
+                    android:layout_marginBottom="24dp"
                     android:padding="12dp"
-                    android:text="SignUp Using Facebook"
-                    android:textAllCaps="false" />
+                    android:onClick="setEndDate"
+                    android:text="Return Date"/>
                 <!--Google SignUP Button-->
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btn_signup_using_google"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:onClick="signUpWithSocialMedia"
+                    android:layout_marginTop="25dp"
+                    android:onClick="addEventBT"
                     android:padding="12dp"
-                    android:text="SignUp Using Google Account"
+                    android:text="Add Tour Event"
                     android:textAllCaps="false" />
 
             </LinearLayout>

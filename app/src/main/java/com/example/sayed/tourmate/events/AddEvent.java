@@ -1,5 +1,6 @@
 package com.example.sayed.tourmate.events;
 
+import android.app.DatePickerDialog;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.example.sayed.tourmate.R;
@@ -20,17 +23,30 @@ import com.seatgeek.placesautocomplete.model.AutocompleteResultType;
 import com.seatgeek.placesautocomplete.model.Place;
 import com.seatgeek.placesautocomplete.model.PlaceDetails;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class AddEvent extends AppCompatActivity {
     private ActivityAddEventBinding binding;
     private PlacesAutocompleteTextView pAutocomplete;
-    private TourMatePlacesAutocompleteAdapter autocompleteAdapter;
-    String localArea="", city="", state, country;
+    //For DatePicker>>>>
+    private int year, month, day, hour, minute;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_event);
 
+        //For Date Picker.... set Time>>>>>>>>>>>>>>>>
+        calendar = Calendar.getInstance();
+        year=calendar.get(Calendar.YEAR);
+        month=calendar.get(Calendar.MONTH);
+        day=calendar.get(Calendar.DATE);
+        hour=calendar.get(Calendar.HOUR);
+        minute=calendar.get(Calendar.MINUTE);
+
+        //For Auto Place Suggestion>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         pAutocomplete = findViewById(R.id.placeAutoComplete);
         //Here Geocode returns full adderss... by default it will return only city division and country
         pAutocomplete.setResultType(AutocompleteResultType.GEOCODE);
@@ -88,12 +104,58 @@ public class AddEvent extends AppCompatActivity {
 
             }
         });
+        //End Of Auto Place Picker Suggestion>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     }
+    //End of On create
+
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+    }
+
+
+
+    //start date set button clicked>>>>>>>>>>>>>>>>>>>>
+    public void setStartDate(View view) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, startDateListener, year, month, day);
+        datePickerDialog.show();
+    }
+    private DatePickerDialog.OnDateSetListener startDateListener= new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+            calendar.set(i, i1, i2);
+            //SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MMM/yy");
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEE, dd MMM YYYY");
+            String newDate = simpleDateFormat.format(calendar.getTime());
+            binding.startDateBT.setText(newDate);
+        }
+    };
+
+    public void setEndDate(View view) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, endDateListener, year, month, day);
+        datePickerDialog.show();
+    }
+    private DatePickerDialog.OnDateSetListener endDateListener= new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+            calendar.set(i, i1, i2);
+            //SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MMM/yy");
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEE, dd MMM YYYY");
+            String newDate = simpleDateFormat.format(calendar.getTime());
+            binding.endDateBT.setText(newDate);
+        }
+    };
+    //date picker dialog end>>>>>>>>>>>>>>>
+
+
+
+
+    //After hitting Add Tour Event Button
+    public void addEventBT(View view) {
 
     }
 }

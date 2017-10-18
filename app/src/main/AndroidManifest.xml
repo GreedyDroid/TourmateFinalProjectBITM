@@ -36,7 +36,7 @@
             android:theme="@style/AppTheme.Dark"></activity>
         <activity
             android:name=".events.AddEvent"
-            android:theme="@style/AppTheme.Dark.Dialog"></activity>
+            android:theme="@style/AppTheme.Dark.DialogBlue_gray"></activity>
     </application>
 
 </manifest>
