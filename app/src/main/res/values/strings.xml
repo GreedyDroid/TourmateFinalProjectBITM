@@ -12,4 +12,7 @@
     <string name="sign_up_progress">"Registering In</string>
     <string name="facebook_application_id" translatable="false">125872198075702</string>
     <string name="title_activity_events">Events</string>
+    <!--  google place api-->
+    <string name="google_maps_api_key">AIzaSyDhg0IiufSFFAUIB_mdDJOkNL4t0UWUYJ4</string>
+    <string name="title_activity_eventss">Eventss</string>
 </resources>

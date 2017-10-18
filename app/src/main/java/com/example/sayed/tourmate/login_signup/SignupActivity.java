@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -137,7 +138,8 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private void registerWithEmailAndPass(final String email, String password, final String name, final String mobile){
+    // this code is written inside asynTask
+ /*   private void registerWithEmailAndPass(final String email, String password, final String name, final String mobile){
         //Firebase Auth
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -146,7 +148,9 @@ public class SignupActivity extends AppCompatActivity {
                         if (task.isSuccessful()){
                             updateDatabase(name, email, mobile);
                         }else {
-                            Toast.makeText(SignupActivity.this, "Sign Up Failed, Please Try Again", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(binding.coordinatorLayout, "Sign Up Failed, Please Try Again", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+//                            Toast.makeText(SignupActivity.this, "Sign Up Failed, Please Try Again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -155,7 +159,7 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(SignupActivity.this, "logIn Failed Try Again", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     private void onSignupSuccess() {
         binding.btnSignup.setEnabled(true);
@@ -241,7 +245,8 @@ public class SignupActivity extends AppCompatActivity {
                             if (task.isSuccessful()){
                                 updateDatabase(name, email, mobile);
                             }else {
-                                Toast.makeText(SignupActivity.this, "Sign Up Failed Try again and Internet Connection", Toast.LENGTH_LONG).show();
+                                Snackbar.make(binding.coordinatorLayout, "Sign Up Failed, Please Try Again", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
                             }
                         }
                     });

@@ -195,11 +195,6 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.addAuthStateListener(authStateListener);
     }
 
-    public void signOut(View view) {
-        firebaseAuth.signOut();
-        Toast.makeText(this, "Signd Out", Toast.LENGTH_SHORT).show();
-    }
-
     public void singInWithFacebook(View view) {
         startActivityForResult(
                 AuthUI.getInstance().createSignInIntentBuilder()
@@ -243,7 +238,10 @@ class MyAsyncTask extends AsyncTask<String, Integer, Void> {
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(LoginActivity.this, "         LogIn Failed \nWrond Email Or Password", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(binding.coordinatorLayout, "LogIn Failed \nWrong Email Or Password", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    /*
+                    Toast.makeText(LoginActivity.this, "         LogIn Failed \nWrond Email Or Password", Toast.LENGTH_SHORT).show();*/
                     binding.inputPassword.setText("");
                     logInSuccess = true;
                 }
