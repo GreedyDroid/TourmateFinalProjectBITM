@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -27,14 +29,17 @@ import java.util.ArrayList;
 
 public class Events extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
     private MyAsyncTaskAddEvent asyncTaskAddEvent;
+    private MyAsyncTaskLoadEvent asyncTastLoasdEvent;
     private ArrayList<UserEvent>events;
 
+    //For Recycler View
+    private RecyclerView mRecyclerView;
+    private EventViewAdapter eventViewAdapter;
+
     //exsperement
-    TextView testTV;
     private ArrayList<SpentMoneyFor>expenses = new ArrayList<>();
 
     private String location="", budget="", startDate="", returnDate="";
@@ -43,10 +48,8 @@ public class Events extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mRecyclerView = (RecyclerView) findViewById(R.id.event_recycler_view);
         setSupportActionBar(toolbar);
-
-        //test
-        testTV = findViewById(R.id.testTVCheck);
 
         //Firebase getInstance
         firebaseAuth = FirebaseAuth.getInstance();
@@ -82,35 +85,14 @@ public class Events extends AppCompatActivity {
             }
         });
 
-        //Load All Event from Database
-        loadEvents();
     }
 
-
-    //Load AllEvent From Firebase
-    private void loadEvents() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                events = new ArrayList<UserEvent>();
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    UserEvent event = snapshot.getValue(UserEvent.class);
-                    events.add(event);
-                }
-                try{
-                    Toast.makeText(Events.this, "budget: "+events.get(0).getBudget(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Events.this, "location"+events.get(0).getLocation(), Toast.LENGTH_SHORT).show();
-                    testTV.setText(events.get(0).getBudget()+"\nProfesson: "+events.get(0).getLocation());
-                }catch (Exception e){
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Load All Event from Database
+        asyncTastLoasdEvent = new MyAsyncTaskLoadEvent();
+        asyncTastLoasdEvent.execute();
     }
 
 
@@ -207,6 +189,116 @@ public class Events extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            progressDialog.dismiss();
+        }
+
+    }
+    //End of Adding Event on FireBase............
+
+
+
+    //For Loading data from database>>>>>
+
+    class MyAsyncTaskLoadEvent extends AsyncTask<Void, Integer, Void> {
+
+        boolean runningRegister;
+        ProgressDialog progressDialog;
+        boolean isSignUpProcessed, logInSuccess;
+
+        //Load AllEvent From Firebase
+        private boolean loadEvents() {
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    events = new ArrayList<UserEvent>();
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                        UserEvent event = snapshot.getValue(UserEvent.class);
+                        events.add(event);
+                    }
+                    try{
+                        //For Recycler View
+                        eventViewAdapter = new EventViewAdapter(Events.this, events);
+                        LinearLayoutManager llm = new LinearLayoutManager(Events.this);
+                        mRecyclerView.setLayoutManager(llm);
+                        mRecyclerView.setAdapter(eventViewAdapter);
+                    }catch (Exception e){
+
+                    }
+                    logInSuccess = true;
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    logInSuccess = true;
+                }
+            });
+            return true;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            isSignUpProcessed = loadEvents();
+            int i = 0;
+            if (logInSuccess){
+                runningRegister = false;
+            }
+            while(runningRegister){
+                try {
+                    Thread.sleep(1000);
+                    if (logInSuccess){
+                        break;
+                    }
+                    if(isSignUpProcessed){
+                        runningRegister = false;
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(i++ == 100){
+                    runningRegister = false;
+                }
+
+                publishProgress(i);
+            }
+            //don't touch dialog here it'll break the application
+            //do some lengthy stuff like calling login webservice
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressDialog.setMessage("Loading Events..\n  Time: "+String.valueOf(values[0]));
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            runningRegister = true;
+            isSignUpProcessed= false;
+            logInSuccess= false;
+
+            progressDialog = new ProgressDialog(Events.this,
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Updating Data...");
+            progressDialog.show();
+
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    runningRegister = false;
+                }
+            });
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
             progressDialog.dismiss();
         }
 
