@@ -33,10 +33,14 @@
         <activity
             android:name=".events.Events"
             android:label="@string/title_activity_events"
-            android:theme="@style/AppTheme.Dark"></activity>
+            android:theme="@style/AppTheme.Events">
+
+        </activity>
         <activity
             android:name=".events.AddEvent"
-            android:theme="@style/AppTheme.Dark.DialogBlue_gray"></activity>
+            android:theme="@style/AppTheme.Dark.DialogBlue_gray">
+
+        </activity>
     </application>
 
 </manifest>

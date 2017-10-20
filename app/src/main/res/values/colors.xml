@@ -21,4 +21,7 @@
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
     <color name="floting_bt_clolor">#673AB7</color>
+    <color name="material_background">#ededed</color>
+    <color name="material_card">#f9f9f9</color>
+    <color name="material_font">#212121</color>
 </resources>

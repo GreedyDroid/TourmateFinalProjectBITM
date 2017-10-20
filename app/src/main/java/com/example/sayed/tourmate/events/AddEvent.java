@@ -137,7 +137,7 @@ public class AddEvent extends AppCompatActivity {
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
             calendar.set(i, i1, i2);
             //SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MMM/yy");
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEE, dd MMM YYYY");
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEE, MMM d, ''yy");
             String newDate = simpleDateFormat.format(calendar.getTime());
             binding.startDateBT.setText(newDate);
             binding.endDateBT.setEnabled(true);
@@ -155,7 +155,7 @@ public class AddEvent extends AppCompatActivity {
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
             calendar.set(i, i1, i2);
             //SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MMM/yy");
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEE, dd MMM YYYY");
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEE, MMM d, ''yy");
             String newDate = simpleDateFormat.format(calendar.getTime());
             binding.endDateBT.setText(newDate);
             returnDate = newDate;
@@ -176,6 +176,7 @@ public class AddEvent extends AppCompatActivity {
                     .putExtra("tourBudget", budget)
                     .putExtra("tourStartDate", startDate)
                     .putExtra("tourReturnDate", returnDate));
+            finish();
         }else {
             Snackbar.make(view, "Set All Field Correctly!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
