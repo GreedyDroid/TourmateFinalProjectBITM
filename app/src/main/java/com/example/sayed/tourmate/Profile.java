@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 public class Profile extends AppCompatActivity {
 
  /*   private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -200,7 +202,9 @@ public class Profile extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(user.getPhotoUrl() != null){
-                Picasso.with(Profile.this).load(user.getPhotoUrl()).into(binding.userProfilePhoto);
+                Picasso.with(Profile.this).load(user.getPhotoUrl())
+                        .transform(new CropCircleTransformation())
+                        .into(binding.userProfilePhoto);
             }
         }
 
