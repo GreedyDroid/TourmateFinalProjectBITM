@@ -1,12 +1,14 @@
 package com.example.sayed.tourmate.events;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by nurud on 10/18/2017.
  */
 
-public class UserEvent {
+@SuppressWarnings("serial")
+public class UserEvent implements Serializable{
     private String eventKey;
     private String location;
     private String budget;

@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/event_image_single"
             android:layout_width="100dp"
-            android:layout_height="60dp"
+            android:layout_height="90dp"
             android:src="@drawable/sample_travle_img"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"

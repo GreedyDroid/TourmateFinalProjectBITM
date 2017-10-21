@@ -41,6 +41,12 @@
             android:theme="@style/AppTheme.Dark.DialogBlue_gray">
 
         </activity>
+        <activity
+            android:name=".events.event_detail.EventDetail"
+            android:label="@string/title_activity_event_detail"
+            android:theme="@style/AppTheme.Events">
+
+        </activity>
     </application>
 
 </manifest>

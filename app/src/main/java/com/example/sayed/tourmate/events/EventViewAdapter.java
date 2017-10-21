@@ -1,14 +1,19 @@
 package com.example.sayed.tourmate.events;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sayed.tourmate.R;
+import com.example.sayed.tourmate.events.event_detail.EventDetail;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -61,6 +66,26 @@ public class EventViewAdapter extends RecyclerView.Adapter<EventViewAdapter.Even
             areaTV = itemView.findViewById(R.id.tour_location_TV_single);
             dateTV = itemView.findViewById(R.id.tour_date_TV_single);
             budgetTV = itemView.findViewById(R.id.tour_budget_TV_single_view);
+
+// I did This for testing purpse // TODO: start new activity for detail event info>>>
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    UserEvent selectedIvent = events.get(position);
+                     Intent intent = new Intent(context, EventDetail.class).putExtra("allEvents", selectedIvent);
+                    try{
+                        context.startActivity(intent);
+                    }catch (Exception e){
+                        Toast.makeText(context, ""+e, Toast.LENGTH_SHORT).show();
+                    }
+                    /*Toast.makeText(context, "Spent Amount: "+
+                            events.get(position).getAllExpenses()
+                            .get(0).getSpentSector()+"\nAmount: "+events.get(position)
+                            .getAllExpenses().get(0).getSpentMoney(), Toast.LENGTH_SHORT).show();*/
+                }
+            });
         }
     }
 }

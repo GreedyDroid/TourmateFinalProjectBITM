@@ -55,5 +55,9 @@ dependencies {
 
     //For Place Auto Complete
     compile 'com.seatgeek:placesautocomplete:0.3-SNAPSHOT'
+    //for circle Image
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
+    compile 'jp.wasabeef:picasso-transformations:2.1.2'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 }
 apply plugin: 'com.google.gms.google-services'
