@@ -162,7 +162,7 @@ public class EventDetail extends AppCompatActivity {
             });
             return true;
         }
-    
+
 
 
         @Override
