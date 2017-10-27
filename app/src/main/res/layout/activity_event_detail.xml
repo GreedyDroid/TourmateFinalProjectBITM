@@ -25,76 +25,94 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/spent_money_textView_total"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/spent_money"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="@color/material_font"
-                android:padding="5dp"
-                android:layout_marginTop="5dp"/>
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fitsSystemWindows="true">
 
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ProgressBar
-                    android:id="@+id/spent_money_progress_bar"
-                    style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="35dp"
-                    android:progressBackgroundTint="#333333"
-                    android:progressTint="@color/errorColor"
-                    android:progress="95"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="5dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginLeft="5dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintVertical_bias="0.0" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/spent_money_textView_total"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="90%"
+                    android:text="@string/spent_money"
+                    android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:textColor="@color/accent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="8dp"
-                    app:layout_constraintRight_toRightOf="@+id/spent_money_progress_bar"
-                    android:layout_marginLeft="8dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:id="@+id/textView2"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="8dp" />
-            </android.support.constraint.ConstraintLayout>
+                    android:textColor="@color/material_font"
+                    android:padding="5dp"
+                    android:layout_marginTop="5dp"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/spentMoneySectorsListRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </android.support.v7.widget.RecyclerView>
+                    <ProgressBar
+                        android:id="@+id/spent_money_progress_bar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:progressBackgroundTint="#333333"
+                        android:progressTint="@color/errorColor"
+                        android:progress="95"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="5dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginLeft="5dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintVertical_bias="0.0" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="90%"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:textColor="@color/accent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        app:layout_constraintRight_toRightOf="@+id/spent_money_progress_bar"
+                        android:layout_marginLeft="8dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:id="@+id/textView2"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="8dp" />
+                </android.support.constraint.ConstraintLayout>
 
-        </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/spentMoneySectorsListRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <!-- Signup Button -->
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_save_cost"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:padding="12dp"
+                    android:onClick="saveAllCost"
+                    android:textColor="@color/white"
+                    android:text="Save"/>
+
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addExpensesFab"

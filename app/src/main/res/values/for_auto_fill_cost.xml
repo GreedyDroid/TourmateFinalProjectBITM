@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="auto_fill_cost_array">
+        <item>Transport</item>
+        <item>Hotel Rent</item>
+        <item>Food</item>
+        <item>Fuel</item>
+        <item>Bus Ticket</item>
+        <item>Air Ticket</item>
+        <item>Tour Guide</item>
+        <item>Car Rent</item>
+        <item>Others</item>
+        <item>Restaurant bill</item>
+        <item>Resort Rent</item>
+        <item>Tour Materials</item>
+    </string-array>
+</resources>
