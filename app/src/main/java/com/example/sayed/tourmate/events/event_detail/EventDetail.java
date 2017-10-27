@@ -37,7 +37,7 @@ public class EventDetail extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
     private String databaseEventChild;
-
+    
     UserEvent selectedEvent;
     //For RecyclarVie List:
     private RecyclerView costListRV;
