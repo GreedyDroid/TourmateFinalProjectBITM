@@ -16,7 +16,6 @@
     <string name="google_maps_api_key">AIzaSyDhg0IiufSFFAUIB_mdDJOkNL4t0UWUYJ4</string>
     <string name="title_activity_eventss">Eventss</string>
     <string name="title_activity_event_detail">EventDetail</string>
-    <string name="spent_money">Spent Money: $5000</string>
     <string name="pos_button">Add</string>
     <string name="neg_button">Cancel</string>
     <string name="dialog_tag">Dialog Tag</string>
