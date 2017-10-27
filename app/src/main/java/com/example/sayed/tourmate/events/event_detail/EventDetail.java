@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class EventDetail extends AppCompatActivity {
 
-    
+
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
