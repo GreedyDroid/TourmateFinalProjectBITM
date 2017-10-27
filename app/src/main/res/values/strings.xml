@@ -17,4 +17,7 @@
     <string name="title_activity_eventss">Eventss</string>
     <string name="title_activity_event_detail">EventDetail</string>
     <string name="spent_money">Spent Money: $5000</string>
+    <string name="pos_button">Add</string>
+    <string name="neg_button">Cancel</string>
+    <string name="dialog_tag">Dialog Tag</string>
 </resources>
