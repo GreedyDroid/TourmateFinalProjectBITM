@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sayed.tourmate.R;
@@ -38,6 +39,7 @@ public class EventDetail extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
     private String databaseEventChild;
+    private TextView spent_money_textView_total;
 
     UserEvent selectedEvent;
     //For RecyclarVie List:
@@ -54,6 +56,8 @@ public class EventDetail extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //For recycler ViewList>>
         costListRV =(RecyclerView) findViewById(R.id.spentMoneySectorsListRecycler);
+
+
         //getting selected Event Object from EventViewAdapter
         Intent intent = getIntent();
         selectedEvent = (UserEvent) intent.getSerializableExtra("allEvents");
@@ -62,7 +66,7 @@ public class EventDetail extends AppCompatActivity {
         //If there is any data of events cost>>>>>>>
         spentMoneySectors = new ArrayList<>();
         try{
-            if (selectedEvent.getAllExpenses().size()>1){
+            if (selectedEvent.getAllExpenses().size()>0){
                 spentMoneySectors = selectedEvent.getAllExpenses();
                 createCostList(spentMoneySectors);
             }
@@ -74,6 +78,11 @@ public class EventDetail extends AppCompatActivity {
         }
 
 
+        //Setting Spent Money for Item
+        spent_money_textView_total = findViewById(R.id.spent_money_textView_total);
+        if (spentMoneySectors.size()>0){
+            spent_money_textView_total.setText("Total Spent: "+calculateMoney());
+        }
 
         //For Floating ActionBar
         FloatingActionButton addExpensesFab = (FloatingActionButton) findViewById(R.id.addExpensesFab);
@@ -92,7 +101,6 @@ public class EventDetail extends AppCompatActivity {
         String userId = firebaseAuth.getCurrentUser().getUid();
         databaseReference = database.getReference().child("User").child(userId).child("Event").child(selectedEvent.getEventKey());
         databaseEventChild = "allExpenses";
-        Toast.makeText(this, ""+selectedEvent.getEventKey(), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -131,14 +139,24 @@ public class EventDetail extends AppCompatActivity {
         databaseReference.child(databaseEventChild).setValue(spentMoneySectors).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(EventDetail.this, "Successed", Toast.LENGTH_SHORT).show();
+                spent_money_textView_total.setText("Total Spent: "+calculateMoney());
+                Toast.makeText(EventDetail.this, "Success", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EventDetail.this, "Fai", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventDetail.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //Calculate Spent Money
+    private String calculateMoney(){
+        double totalMoneyL = 0;
+        for (int i=0; i<spentMoneySectors.size(); i++){
+            totalMoneyL += Double.parseDouble(spentMoneySectors.get(i).getSpentMoney());
+        }
+        return String.valueOf(totalMoneyL);
     }
 
 
