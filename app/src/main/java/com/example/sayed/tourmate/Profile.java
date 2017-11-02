@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -65,6 +66,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 
+        setupToolbar();
         //FireBase Authentication Check User Is logged IN>>>
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
@@ -93,6 +95,19 @@ public class Profile extends AppCompatActivity {
 
    /*     BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigationP);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
+    }
+
+
+    public void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     // All Backgroudn Task Here>>>>>>>>>>>>>

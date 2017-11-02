@@ -13,5 +13,8 @@
         <item>Restaurant bill</item>
         <item>Resort Rent</item>
         <item>Tour Materials</item>
+        <item>Dinner</item>
+        <item>lunch</item>
+        <item>Breakfast</item>
     </string-array>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.sayed.tourmate.login_signup;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import com.example.sayed.tourmate.HomeActivity;
 import com.example.sayed.tourmate.Profile;
 import com.example.sayed.tourmate.R;
+import com.example.sayed.tourmate.TransitionHelper;
 import com.example.sayed.tourmate.databinding.ActivityLogInBinding;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_log_in);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        
+
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,9 +62,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
+                transitionTo(intent, REQUEST_SIGNUP);
                 finish();
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                /*overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);*/
             }
         });
 
@@ -69,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
+                if (user != null) {
                     // TODO:  GO to Profile Activity
                     finish();
 //                    startActivity(new Intent(LoginActivity.this, Profile.class));
@@ -94,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Logging In...");
         progressDialog.show();*/
-    //TODO: set progressbar for newer version>>>>>>>>>>>>>>
+        //TODO: set progressbar for newer version>>>>>>>>>>>>>>
         //final ProgressBar progressBar = new ProgressBar(LoginActivity.this,R.style.AppTheme_Dark_Dialog);
         final String email = binding.inputEmail.getText().toString();
         final String password = binding.inputPassword.getText().toString();
@@ -160,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setEnabled(true);
     }
 
-    private boolean validate()  {
+    private boolean validate() {
         boolean valid = true;
 
         String email = binding.inputEmail.getText().toString();
@@ -198,10 +202,10 @@ public class LoginActivity extends AppCompatActivity {
     public void singInWithFacebook(View view) {
         startActivityForResult(
                 AuthUI.getInstance().createSignInIntentBuilder()
-                .setTheme(R.style.AppTheme_Dark)
-                .setLogo(R.drawable.logo)
-                .setProviders(AuthUI.FACEBOOK_PROVIDER)
-                .build(),FB_SIGN_IN);
+                        .setTheme(R.style.AppTheme_Dark)
+                        .setLogo(R.drawable.logo)
+                        .setProviders(AuthUI.FACEBOOK_PROVIDER)
+                        .build(), FB_SIGN_IN);
     }
 
     public void signInWithGoogle(View view) {
@@ -210,63 +214,73 @@ public class LoginActivity extends AppCompatActivity {
                         .setTheme(R.style.AppTheme_Dark)
                         .setLogo(R.drawable.logo)
                         .setProviders(AuthUI.GOOGLE_PROVIDER)
-                        .build(),Gl_SIGN_IN);
+                        .build(), Gl_SIGN_IN);
+    }
+
+    //animatine Text TODO:Delete this
+    @SuppressLint("RestrictedApi")
+    @SuppressWarnings("unchecked")
+    void transitionTo(Intent i, int requestCode) {
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(LoginActivity.this, true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this, pairs);
+        startActivityForResult(i, requestCode, transitionActivityOptions.toBundle());
+           /* startActivity(i, transitionActivityOptions.toBundle());*/
     }
 
 
     //Progress
 
-class MyAsyncTask extends AsyncTask<String, Integer, Void> {
+    class MyAsyncTask extends AsyncTask<String, Integer, Void> {
 
-    boolean running;
-    ProgressDialog progressDialog;
-    boolean logInSuccess, logInProcessed;
+        boolean running;
+        ProgressDialog progressDialog;
+        boolean logInSuccess, logInProcessed;
 
 
-    private boolean logInUsingFIreBase(String email, String password){
-        try{
-            firebaseAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(LoginActivity.this, "Login Success Called from On click Listener", Toast.LENGTH_SHORT).show();
-                                finish();
-                                logInSuccess = true;
+        private boolean logInUsingFIreBase(String email, String password) {
+            try {
+                firebaseAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Login Success Called from On click Listener", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    logInSuccess = true;
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Snackbar.make(binding.coordinatorLayout, "LogIn Failed \nWrong Email Or Password", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Snackbar.make(binding.coordinatorLayout, "LogIn Failed \nWrong Email Or Password", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                     /*
                     Toast.makeText(LoginActivity.this, "         LogIn Failed \nWrond Email Or Password", Toast.LENGTH_SHORT).show();*/
-                    binding.inputPassword.setText("");
-                    logInSuccess = true;
-                }
-            });
-        }catch (Exception e){
-            Toast.makeText(LoginActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+                        binding.inputPassword.setText("");
+                        logInSuccess = true;
+                    }
+                });
+            } catch (Exception e) {
+                Toast.makeText(LoginActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+            }
+            return true;
         }
-        return true;
-    }
 
         @Override
         protected Void doInBackground(String... params) {
             logInProcessed = logInUsingFIreBase(params[0], params[1]);
             int i = 0;
-            if(logInSuccess){
+            if (logInSuccess) {
                 running = false;
             }
-            while(running){
+            while (running) {
                 try {
                     Thread.sleep(1000);
                     // Beacuse Listener takes time to make logInSuccess True..
-                    if (logInSuccess){
+                    if (logInSuccess) {
                         break;
                     }
-                    if (logInProcessed){
+                    if (logInProcessed) {
                         running = false;
                         break;
                     }
@@ -274,7 +288,7 @@ class MyAsyncTask extends AsyncTask<String, Integer, Void> {
                     e.printStackTrace();
                 }
 
-                if(i++ == 100){
+                if (i++ == 100) {
                     running = false;
                 }
 
@@ -289,14 +303,14 @@ class MyAsyncTask extends AsyncTask<String, Integer, Void> {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressDialog.setMessage("Signing In\n  Time: "+String.valueOf(values[0]));
+            progressDialog.setMessage("Signing In\n  Time: " + String.valueOf(values[0]));
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-            logInSuccess= false;
+            logInSuccess = false;
 
             progressDialog = new ProgressDialog(LoginActivity.this,
                     R.style.AppTheme_Dark_Dialog);

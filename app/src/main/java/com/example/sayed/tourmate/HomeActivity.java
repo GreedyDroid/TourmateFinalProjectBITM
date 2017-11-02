@@ -3,11 +3,16 @@ package com.example.sayed.tourmate;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -38,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                   // mTextMessage.setText(R.string.title_home);
+                    // mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_events:
                     //mTextMessage.setText(R.string.title_dashboard);
@@ -62,6 +67,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setupWindowAnimations();
+        }
 
         //FireBase Authentication Check User Is logged IN>>>
         firebaseAuth = FirebaseAuth.getInstance();
@@ -72,13 +80,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
+                if (user != null) {
                     // TODO:  GO to Profile Activity
                     binding.layoutForSignUp.setVisibility(View.GONE);
                     binding.layoutForProfile.setVisibility(View.VISIBLE);
                     Toast.makeText(HomeActivity.this, "User Loged in: "
-                            +user.getEmail(), Toast.LENGTH_SHORT).show();
-                }else {
+                            + user.getEmail(), Toast.LENGTH_SHORT).show();
+                } else {
                     binding.layoutForSignUp.setVisibility(View.VISIBLE);
                     binding.layoutForProfile.setVisibility(View.GONE);
                 }
@@ -91,18 +99,18 @@ public class HomeActivity extends AppCompatActivity {
 
     public void gotoLogInActivity(View view) {
         startActivity(new Intent(this, LoginActivity.class));
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        //overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     public void goToSignUpActivity(View view) {
         startActivity(new Intent(this, SignupActivity.class));
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        //overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
 
     public void goToProfile(View view) {
         startActivity(new Intent(this, Profile.class));
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        //overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     @Override
@@ -124,10 +132,10 @@ public class HomeActivity extends AppCompatActivity {
 
     public void goToEvents(View view) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null){
+        if (user != null) {
             startActivity(new Intent(this, Events.class));
-            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-        }else {
+//            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Please Log in To View Your Events")
                     .setPositiveButton("Login", new DialogInterface.OnClickListener() {
@@ -139,5 +147,15 @@ public class HomeActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        // Re-enter transition is executed when returning to this activity
+        Slide slideTransition = new Slide();
+        slideTransition.setSlideEdge(Gravity.LEFT);
+        slideTransition.setDuration(500);
+        getWindow().setReenterTransition(slideTransition);
+        getWindow().setExitTransition(slideTransition);
     }
 }

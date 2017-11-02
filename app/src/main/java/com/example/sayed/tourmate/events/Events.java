@@ -4,17 +4,26 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.sayed.tourmate.BaseDetailActivity;
 import com.example.sayed.tourmate.R;
+import com.example.sayed.tourmate.TransitionHelper;
+import com.example.sayed.tourmate.login_signup.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,23 +41,28 @@ public class Events extends AppCompatActivity {
     private FirebaseDatabase database;
     private MyAsyncTaskAddEvent asyncTaskAddEvent;
     private MyAsyncTaskLoadEvent asyncTastLoasdEvent;
-    private ArrayList<UserEvent>events;
+    private ArrayList<UserEvent> events;
 
     //For Recycler View
     private RecyclerView mRecyclerView;
     private EventViewAdapter eventViewAdapter;
+    BaseDetailActivity baseDetailActivity;
 
     //exsperement
-    private ArrayList<SpentMoneyFor>expenses = new ArrayList<>();
+    private ArrayList<SpentMoneyFor> expenses = new ArrayList<>();
 
-    private String location="", budget="", startDate="", returnDate="";
+    private String location = "", budget = "", startDate = "", returnDate = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-         mRecyclerView = (RecyclerView) findViewById(R.id.event_recycler_view);
-        setSupportActionBar(toolbar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setupWindowAnimations();
+        }
+        setupToolbar();
+        mRecyclerView = (RecyclerView) findViewById(R.id.event_recycler_view);
+
 
         //Firebase getInstance
         firebaseAuth = FirebaseAuth.getInstance();
@@ -58,8 +72,8 @@ public class Events extends AppCompatActivity {
 
         //If Event Is added
         Intent intent = getIntent();
-        if(intent.hasExtra("tourLocation")){
-            Toast.makeText(this, ""+getIntent().getStringExtra("tourLocation"), Toast.LENGTH_SHORT).show();
+        if (intent.hasExtra("tourLocation")) {
+            Toast.makeText(this, "" + getIntent().getStringExtra("tourLocation"), Toast.LENGTH_SHORT).show();
             location = getIntent().getStringExtra("tourLocation");
             budget = intent.getStringExtra("tourBudget");
             startDate = intent.getStringExtra("tourStartDate");
@@ -86,12 +100,43 @@ public class Events extends AppCompatActivity {
 
     }
 
+    @SuppressWarnings("unchecked")
+    void transitionTo(Intent i) {
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(Events.this, true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(Events.this, pairs);
+        startActivity(i, transitionActivityOptions.toBundle());
+    }
+
+    public void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         //Load All Event from Database
         asyncTastLoasdEvent = new MyAsyncTaskLoadEvent();
         asyncTastLoasdEvent.execute();
+    }
+
+    //metarial Animation
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        // Re-enter transition is executed when returning to this activity
+        Slide slideTransition = new Slide();
+        slideTransition.setSlideEdge(Gravity.LEFT);
+        slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_long));
+        getWindow().setReenterTransition(slideTransition);
+        getWindow().setExitTransition(slideTransition);
     }
 
 
@@ -105,7 +150,7 @@ public class Events extends AppCompatActivity {
 
 
         //Update Datebase>>>>>>>>>>>>
-        private boolean updateDatabase(String location, String budget, String startDate, String returnDate){
+        private boolean updateDatabase(String location, String budget, String startDate, String returnDate) {
 
             //ForUpdating Database.... using key and pursh to seperate this event from other in firebase database..
             String eventKey = databaseReference.push().getKey();
@@ -129,16 +174,16 @@ public class Events extends AppCompatActivity {
         protected Void doInBackground(String... params) {
             isSignUpProcessed = updateDatabase(params[0], params[1], params[2], params[3]);
             int i = 0;
-            if (logInSuccess){
+            if (logInSuccess) {
                 runningRegister = false;
             }
-            while(runningRegister){
+            while (runningRegister) {
                 try {
                     Thread.sleep(1000);
-                    if (logInSuccess){
+                    if (logInSuccess) {
                         break;
                     }
-                    if(isSignUpProcessed){
+                    if (isSignUpProcessed) {
                         runningRegister = false;
                         break;
                     }
@@ -146,7 +191,7 @@ public class Events extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                if(i++ == 100){
+                if (i++ == 100) {
                     runningRegister = false;
                 }
 
@@ -160,15 +205,15 @@ public class Events extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressDialog.setMessage("Signing In\n  Time: "+String.valueOf(values[0]));
+            progressDialog.setMessage("Signing In\n  Time: " + String.valueOf(values[0]));
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             runningRegister = true;
-            isSignUpProcessed= false;
-            logInSuccess= false;
+            isSignUpProcessed = false;
+            logInSuccess = false;
 
             progressDialog = new ProgressDialog(Events.this,
                     R.style.AppTheme_Dark_Dialog);
@@ -195,7 +240,6 @@ public class Events extends AppCompatActivity {
     //End of Adding Event on FireBase............
 
 
-
     //For Loading data from database>>>>>
 
     class MyAsyncTaskLoadEvent extends AsyncTask<Void, Integer, Void> {
@@ -210,17 +254,17 @@ public class Events extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     events = new ArrayList<UserEvent>();
-                    for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         UserEvent event = snapshot.getValue(UserEvent.class);
                         events.add(event);
                     }
-                    try{
+                    try {
                         //For Recycler View
                         eventViewAdapter = new EventViewAdapter(Events.this, events);
                         LinearLayoutManager llm = new LinearLayoutManager(Events.this);
                         mRecyclerView.setLayoutManager(llm);
                         mRecyclerView.setAdapter(eventViewAdapter);
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                     logInSuccess = true;
@@ -238,16 +282,16 @@ public class Events extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             isSignUpProcessed = loadEvents();
             int i = 0;
-            if (logInSuccess){
+            if (logInSuccess) {
                 runningRegister = false;
             }
-            while(runningRegister){
+            while (runningRegister) {
                 try {
                     Thread.sleep(1000);
-                    if (logInSuccess){
+                    if (logInSuccess) {
                         break;
                     }
-                    if(isSignUpProcessed){
+                    if (isSignUpProcessed) {
                         runningRegister = false;
                         break;
                     }
@@ -255,7 +299,7 @@ public class Events extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                if(i++ == 100){
+                if (i++ == 100) {
                     runningRegister = false;
                 }
 
@@ -269,15 +313,15 @@ public class Events extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressDialog.setMessage("Loading Events..\n  Time: "+String.valueOf(values[0]));
+            progressDialog.setMessage("Loading Events..\n  Time: " + String.valueOf(values[0]));
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             runningRegister = true;
-            isSignUpProcessed= false;
-            logInSuccess= false;
+            isSignUpProcessed = false;
+            logInSuccess = false;
 
             progressDialog = new ProgressDialog(Events.this,
                     R.style.AppTheme_Dark_Dialog);
