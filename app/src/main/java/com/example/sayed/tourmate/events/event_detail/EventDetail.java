@@ -52,10 +52,9 @@ public class EventDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setupToolbar();
         //For recycler ViewList>>
-        costListRV =(RecyclerView) findViewById(R.id.spentMoneySectorsListRecycler);
+        costListRV = (RecyclerView) findViewById(R.id.spentMoneySectorsListRecycler);
 
 
         //getting selected Event Object from EventViewAdapter
@@ -65,12 +64,12 @@ public class EventDetail extends AppCompatActivity {
 
         //If there is any data of events cost>>>>>>>
         spentMoneySectors = new ArrayList<>();
-        try{
-            if (selectedEvent.getAllExpenses().size()>0){
+        try {
+            if (selectedEvent.getAllExpenses().size() > 0) {
                 spentMoneySectors = selectedEvent.getAllExpenses();
                 createCostList(spentMoneySectors);
             }
-        }catch (Exception e){ //If there is no cost data in getAllExpenses>>>>>>>>>>>>>>
+        } catch (Exception e) { //If there is no cost data in getAllExpenses>>>>>>>>>>>>>>
             Toast.makeText(this, "Hit Plus Button And Add Your Tour Cost..", Toast.LENGTH_SHORT).show();
             ArrayList<SpentMoneyFor> emptyList = new ArrayList<SpentMoneyFor>();
             selectedEvent.setAllExpenses(emptyList);
@@ -80,8 +79,8 @@ public class EventDetail extends AppCompatActivity {
 
         //Setting Spent Money for Item
         spent_money_textView_total = findViewById(R.id.spent_money_textView_total);
-        if (spentMoneySectors.size()>0){
-            spent_money_textView_total.setText("Total Spent: "+calculateMoney());
+        if (spentMoneySectors.size() > 0) {
+            spent_money_textView_total.setText("Total Spent: " + calculateMoney());
         }
 
         //For Floating ActionBar
@@ -105,7 +104,7 @@ public class EventDetail extends AppCompatActivity {
 
 
     //Create Cost List >>>>>>>>>>>>>>
-    private void createCostList(ArrayList<SpentMoneyFor> spentMoneySectors){
+    private void createCostList(ArrayList<SpentMoneyFor> spentMoneySectors) {
         mSpentMoneyRacyViewAdapter = new SpentMoneyRacyViewAdapter(this, spentMoneySectors);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -139,7 +138,7 @@ public class EventDetail extends AppCompatActivity {
         databaseReference.child(databaseEventChild).setValue(spentMoneySectors).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                spent_money_textView_total.setText("Total Spent: "+calculateMoney());
+                spent_money_textView_total.setText("Total Spent: " + calculateMoney());
                 Toast.makeText(EventDetail.this, "Success", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -151,12 +150,26 @@ public class EventDetail extends AppCompatActivity {
     }
 
     //Calculate Spent Money
-    private String calculateMoney(){
+    private String calculateMoney() {
         double totalMoneyL = 0;
-        for (int i=0; i<spentMoneySectors.size(); i++){
+        for (int i = 0; i < spentMoneySectors.size(); i++) {
             totalMoneyL += Double.parseDouble(spentMoneySectors.get(i).getSpentMoney());
         }
         return String.valueOf(totalMoneyL);
+    }
+
+
+    public void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 

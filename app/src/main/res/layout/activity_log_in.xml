@@ -67,7 +67,8 @@
                     android:text="Login"/>
 
                 <!-- FaceBook Login Button -->
-                <android.support.v7.widget.AppCompatButton
+            <!--    TODO: Setup SignUp-->
+<!--                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btn_login_using_fb"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -75,7 +76,7 @@
                     android:onClick="singInWithFacebook"
                     android:padding="12dp"
                     android:text="LogIn Using Facebook"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false" />-->
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btn_login_using_google"
                     android:layout_width="fill_parent"
