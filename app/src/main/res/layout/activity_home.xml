@@ -139,7 +139,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Friends"
+                        android:text="Log Out"
                         android:textSize="35dp"
                         android:gravity="center"
                         android:onClick="logOUt"

@@ -107,7 +107,7 @@
                 android:padding="12dp"
                 android:text="Create Account"/>
             <!-- FaceBook SignUP Button -->
-            <android.support.v7.widget.AppCompatButton
+<!--            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_signup_using_fb"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 android:onClick="signUpWithSocialMedia"
                 android:padding="12dp"
                 android:text="SignUp Using Facebook"
-                android:textAllCaps="false" />
+                android:textAllCaps="false" />-->
                 <!--Google SignUP Button-->
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_signup_using_google"
